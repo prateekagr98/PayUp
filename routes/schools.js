@@ -12,17 +12,22 @@ router.post('/save', function(req, res) {
 		password = req.body.password,
 		name = req.body.name;
 
+	console.log(req.body);
+
 	if(email && password && name){
 		var newSchool = new SchoolModel({
 			name: req.body.name,
 			address: req.body.address,
 			email: req.body.email,
 			password: req.body.password,
-			conatctNo: req.body.contactNo
+			contactNo: req.body.contactNo,
+			city: req.body.city,
+			state: req.body.state
 		});
 
 		newSchool.save(function(err, newSchool) {
 			if(err) {
+				console.log('not saved');
 				return console.error(err);
 			}
 			console.log('New School Added');

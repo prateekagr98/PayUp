@@ -5,7 +5,8 @@ var schoolSchema = mongoose.Schema({
 	email: String,
 	contactNo: String,
 	location: String,
-	
+	city: String,
+	state: String,
 	password: String,
 });
 
