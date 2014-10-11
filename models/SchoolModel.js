@@ -10,6 +10,15 @@ var schoolSchema = mongoose.Schema({
 	password: String,
 });
 
+schoolSchema.methods.validPassword = function(password) {
+	if(this.password == password) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 var SchoolModel = mongoose.model('School', schoolSchema);
 
 module.exports = SchoolModel;

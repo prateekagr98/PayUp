@@ -5,7 +5,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require ('http');             // For serving a basic web page.
-var mongoose = require ("mongoose"); // The reason for this demo.
+var mongoose = require ("mongoose"); // For mongoose.
+var passport = require('passport');  // For passport 
+var LocalStrategy = require('passport-local').Strategy;  // For passport-local
+var SchoolModel = require('./models/SchoolModel');
+
 
 // Here we find an appropriate database to connect to, defaulting to
 // localhost if we don't find one.
@@ -28,6 +32,31 @@ mongoose.connect(uristring, function (err, res) {
   }
 });
 
+passport.serializeUser(function(school, done) {
+  done(null, school.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  SchoolModel.findById(id, function(err, school) {
+    done(err, school);
+  });
+});
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    SchoolModel.findOne({ email: username }, function (err, school) {
+      if (err) { return done(err); }
+      if (!school) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!school.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, school);
+    });
+  }
+));
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var schools = require('./routes/schools');
@@ -45,6 +74,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', routes);
 app.use('/users', users);

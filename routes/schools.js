@@ -1,12 +1,15 @@
 var express = require('express');
 var router = express.Router();
 var SchoolModel = require('../models/SchoolModel');
+var passport = require('passport');
 
 /* GET home page. */
 router.get('/new', function(req, res) {
   res.render('addSchool', { title: 'PayUp' });
 });
 
+
+/* Save School Data */
 router.post('/save', function(req, res) {
 	var email = req.body.email,
 		password = req.body.password,
@@ -39,5 +42,12 @@ router.post('/save', function(req, res) {
 		res.redirect('/schools/new');
 	}
 });
+
+
+router.post('/login', passport.authenticate('local', { successRedirect: '/schools/new',
+                                   failureRedirect: '/',
+                                   failureFlash: false })
+);
+
 
 module.exports = router;
