@@ -4,7 +4,7 @@ var SchoolModel = require('../models/SchoolModel');
 
 /* GET home page. */
 router.get('/new', function(req, res) {
-  res.render('addSchool', { title: 'New' });
+  res.render('addSchool', { title: 'PayUp' });
 });
 
 router.post('/save', function(req, res) {
