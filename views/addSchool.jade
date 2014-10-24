@@ -1,26 +1,41 @@
 extends layout
 
 block content
-  h1
-    p Register Your School
+  h2 Register a New School
+  hr
+  div.row
+      div.col-md-8
+        form.form-inline( role="form" name="register", action="/schools/save", method="post")
+          div.form-group
+            label(for="name") Name
+            input.form-control(type="text", id="name", name="name", required)
 
-    div
-      form(name="register", action="/schools/save", method="post")
-        p Name:
-          input(type="text", name="name")
-        p Email:
-          input(type="text", name="email")
-        p Password:
-          input(type="password", name="password")
-        p Confirm password:
-          input(type="password", name="confirm_password")
-        p Address:
-          input(type="text", name="address")
-        p Contact:
-          input(type="text", name="contactNo")
-        p City:
-          input(type="text", name="city")
-        p State:
-          input(type="text", name="state")
-        input(type="submit", value="register")
+          div.form-group
+            label(for="email") Email
+            input.form-control(type="email", id="email", name="email", required)
 
+          div.form-group
+            label(for="password") Password
+            input.form-control(type="password", id="password", name="password", required)
+
+          div.form-group
+            label(for="address") Address
+            input.form-control(id="address", name="address", rows="3", required)
+
+          div.form-group
+            label(for="street") Street
+            input.form-control(type="text", id="street", name="street", required)
+
+          div.form-group
+            label(for="city") City
+            input.form-control(type="text", id="city", name="city", required)
+
+          div.form-group
+            label(for="state") State
+            input.form-control(type="text", id="state", name="state", required)
+
+          div.form-group
+            label(for="contact") Contact No.
+            input.form-control(type="number", id="contact", name="contact", required)
+
+          button.btn.btn-primary(type="submit") Submit

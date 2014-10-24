@@ -1,12 +1,16 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
 
-    div.loginbox
-    form(name="login", action="/schools/login", method="post")
-      input(type="text", name="username")
-      p
-        input(type="password", name="password")
-      input(type="submit", value="login")
+    div.row
+      div.col-md-4
+        form( role="form" name="login", action="/schools/login", method="post")
+          div.form-group
+            label(for="username") Email ID
+            input.form-control(type="email", id="username", name="username", required)
+
+          div.form-group
+            label(for="password") Password
+            input.form-control(type="password", id="password", name="password", required)
+
+          button.btn.btn-primary(type="submit") Submit
