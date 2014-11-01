@@ -10,7 +10,6 @@ var passport = require('passport');  // For passport
 var LocalStrategy = require('passport-local').Strategy;  // For passport-local
 var SchoolModel = require('./models/SchoolModel');
 var fs = require('fs');
-var paypal = require('paypal-rest-sdk');
 
 // Here we find an appropriate database to connect to, defaulting to
 // localhost if we don't find one.
@@ -63,15 +62,6 @@ var users = require('./routes/users');
 var schools = require('./routes/schools');
 
 var app = express();
-
-try {
-  var configJSON = fs.readFileSync(__dirname + "/config.json");
-  var config = JSON.parse(configJSON.toString());
-} catch (e) {
-  console.error("File config.json not found or is invalid: " + e.message);
-  process.exit(1);
-}
-paypal.configure(config.api);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
